@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Confessing Her</title>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+background:black;
+color:white;
+font-family:Georgia,serif;
+height:100vh;
+}
+
+#bouncingText{
+position:absolute;
+font-size:clamp(1.5rem,5vw,4rem);
+font-weight:bold;
+white-space:nowrap;
+user-select:none;
+}
+
+#countdown{
+position:absolute;
+font-size:clamp(1rem,3vw,2.5rem);
+font-family:"Courier New",monospace;
+white-space:nowrap;
+user-select:none;
+}
+
+audio{display:none;}
+</style>
+</head>
+
+<body>
+
+<div id="bouncingText">Confessing Her</div>
+<div id="countdown"></div>
+
+<audio autoplay loop>
+<source src="Edd_Sheeran_-_Perfect_(mp3.pm).mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// countdown to 14 feb 2036
+function cd(){
+var now = new Date()
+var t = new Date("2036-02-14T00:00:00")
+var d = t - now
+
+var el = document.getElementById("countdown")
+
+if(d<=0){
+el.innerText="It's 14 Feb 2036!"
+return
+}
+
+var days = Math.floor(d/(1000*60*60*24))
+el.innerText = days + " days to go"
+}
+
+cd()
+setInterval(cd,60000)
+
+
+// dvd bounce
+var t1 = document.getElementById("bouncingText")
+var t2 = document.getElementById("countdown")
+
+var x = Math.random()*(window.innerWidth - t1.offsetWidth)
+var y = Math.random()*(window.innerHeight - t1.offsetHeight)
+
+var dx = 0.7 + Math.random()*0.5
+var dy = 0.7 + Math.random()*0.5
+
+var cx = Math.random()*(window.innerWidth - t2.offsetWidth)
+var cy = Math.random()*(window.innerHeight - t2.offsetHeight)
+
+var cdx = 0.7 + Math.random()*0.5
+var cdy = 0.7 + Math.random()*0.5
+
+
+function loop(){
+
+x += dx
+y += dy
+
+if(x + t1.offsetWidth >= window.innerWidth || x<=0) dx = -dx
+if(y + t1.offsetHeight >= window.innerHeight || y<=0) dy = -dy
+
+t1.style.left = x + "px"
+t1.style.top  = y + "px"
+
+
+cx += cdx
+cy += cdy
+
+if(cx + t2.offsetWidth >= window.innerWidth || cx<=0) cdx = -cdx
+if(cy + t2.offsetHeight >= window.innerHeight || cy<=0) cdy = -cdy
+
+t2.style.left = cx + "px"
+t2.style.top  = cy + "px"
+
+requestAnimationFrame(loop)
+}
+
+loop()
+
+
+// fix positions if window resized
+window.addEventListener("resize",function(){
+
+x = Math.min(x,window.innerWidth - t1.offsetWidth)
+y = Math.min(y,window.innerHeight - t1.offsetHeight)
+
+cx = Math.min(cx,window.innerWidth - t2.offsetWidth)
+cy = Math.min(cy,window.innerHeight - t2.offsetHeight)
+
+})
+
+</script>
+
+</body>
+</html>
