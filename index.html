@@ -36,7 +36,16 @@ audio{display:none;}
 </head>
 
 <body>
-
+<div id="views" style="
+position:absolute;
+top:10px;
+left:50%;
+transform:translateX(-50%);
+font-size:clamp(0.8rem,2vw,1.5rem);
+font-family:'Courier New',monospace;
+">
+Views: Loading...
+</div>
 <div id="bouncingText">Confessing Her</div>
 <div id="countdown"></div>
 
@@ -122,6 +131,17 @@ cy = Math.min(cy,window.innerHeight - t2.offsetHeight)
 
 })
 
+//  views counter
+const viewsElement = document.getElementById("views");
+fetch("https://api.countapi.xyz/hit/confessing-1323132-page/visits")
+  .then(res => res.json())
+  .then(data => {
+    viewsElement.textContent = "Views: " + data.value;
+  })
+  .catch(err => {
+    console.log("Could not load views counter:", err);
+    viewsElement.textContent = "Views: unavailable";
+  });
 </script>
 
 </body>
